@@ -1,0 +1,23 @@
+{
+  "name": "superheroproject",
+  "version": "1.0.0",
+  "description": "A demo crud api using mongodb and express as API router",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codymelton/superheroesCRUD.git"
+  },
+  "author": "Cody Melton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/codymelton/superheroesCRUD/issues"
+  },
+  "homepage": "https://github.com/codymelton/superheroesCRUD#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}
