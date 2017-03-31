@@ -1,5 +1,6 @@
 var express = require('express');
 var Superhero = require('./models/superhero')
+var Villain = require('./models/villain')
 var app     = express();
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
@@ -11,8 +12,10 @@ mongoose.connect("mongodb://localhost/superheroes");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/superheroes', function(req,res){
+// app.METHOD('URL LOCATION', function(req, res))
 
+// Returns all super heroes from the DB.
+app.get('/superheroes', function(req,res){
   Superhero.find(function(err, data){
     if (err) {
       console.log(err);
@@ -20,9 +23,20 @@ app.get('/superheroes', function(req,res){
       res.json(data);
     }
   });
-
 })
 
+// Returns all villains from the DB
+app.get('/villains', function(req,res){
+  Villain.find(function(err, data){
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(data);
+    }
+  });
+});
+
+// Posts to the superhero DB
 app.post('/superheroes', function(req,res){
   var newSuper = new Superhero({
       name: req.body.name,
@@ -35,10 +49,27 @@ app.post('/superheroes', function(req,res){
     if (err) {
       console.log(err);
     } else {
-      res.json(data)
+      res.json(data);
     }
   });
-})
+});
+
+// Posts to the villain DB
+app.post('/villains', function(req,res){
+    var newVillain = new Villain({
+      name: req.body.name,
+      evilPower: req.body.evilPower,
+      evil: req.body.evil,
+      nemesis: req.body.nemesis
+    });
+    newVillain.save(function(err,data){
+      if (err) {
+        console.log(err);
+      } else {
+        res.json(data);
+      }
+    });
+});
 
 app.get('/superheroes/:superhero_id', function(req,res){
   Superhero.findById(req.params.superhero_id, function(err,data){
@@ -47,10 +78,24 @@ app.get('/superheroes/:superhero_id', function(req,res){
     } else {
       res.json(data);
     }
-  })
-})
-// app.METHOD('URL LOCATION', function(req, res))
+  });
+});
 
+// app.delete
+
+app.delete('/superheroes/:superhero_id', function(req,res){
+  Superhero.remove({_id: req.params.superhero_id}, function(err){
+    if (err) {
+      console.log(err);
+    } else {
+      res.send("Super hero was 💩🛢'd")
+    }
+  });
+});
+
+// app.put
+
+//Server start happens last
 var server = app.listen(3000, function(){
   console.log("Server is 💩  on PORT 3000");
 });
