@@ -47,7 +47,7 @@ app.get('/api/superheroes', function(req,res){ //added /api for backend
 })
 
 // Returns all villains from the DB
-app.get('/villains', function(req,res){
+app.get('/api/villains', function(req,res){
   Villain.find(function(err, data){
     if (err) {
       console.log(err);
@@ -58,7 +58,7 @@ app.get('/villains', function(req,res){
 });
 
 // Posts to the superhero DB
-app.post('/superheroes', function(req,res){
+app.post('/api/superheroes', function(req,res){
   var newSuper = new Superhero({
       name: req.body.name,
       superPower: req.body.superPower,
@@ -76,7 +76,7 @@ app.post('/superheroes', function(req,res){
 });
 
 // Posts to the villain DB
-app.post('/villains', function(req,res){
+app.post('/api/villains', function(req,res){
     var newVillain = new Villain({
       name: req.body.name,
       evilPower: req.body.evilPower,
@@ -105,7 +105,7 @@ app.get('/api/superheroes/:superhero_id', function(req,res){
 
 // app.delete
 
-app.delete('/superheroes/:superhero_id', function(req,res){
+app.delete('/api/superheroes/:superhero_id', function(req,res){
   Superhero.remove({_id: req.params.superhero_id}, function(err){
     if (err) {
       console.log(err);

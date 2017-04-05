@@ -11,3 +11,5 @@ We defined a mongoose schema in the file models/superhero
 A schema is like a blueprint, it defines what all future heroes will
 look like.  It will be a constructor function we will use to actually
 make new superheroes.
+
+need to make anything that accesses the backend database have /api like in the server.js example.
