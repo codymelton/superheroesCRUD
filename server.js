@@ -13,6 +13,10 @@ mongoose.connect("mongodb://localhost/superheroes");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Tells express where client side (static) code
+//is going to live in the public folder.
+app.use(express.static('public'));
+
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -114,5 +118,5 @@ app.delete('/superheroes/:superhero_id', function(req,res){
 
 //Server start happens last
 var server = app.listen(3000, function(){
-  console.log("Server is 💩  on PORT 3000");
+  console.log("Server is the 💩  on PORT 3000");
 });
