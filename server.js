@@ -4,6 +4,7 @@ var Villain = require('./models/villain')
 var app     = express();
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
+var path = require('path');
 
 //required to connect to our local database.
 //it will look for/ or create a db called superheroes.
@@ -11,6 +12,22 @@ mongoose.connect("mongodb://localhost/superheroes");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+//Goes to index when goes to main /
+app.get('/', function(req, res){
+  res.render('index')
+});
+
+app.get('/heroes', function(req, res){
+  res.render('good')
+});
+
+app.get('/villians', function(req, res){
+  res.render('bad')
+});
 
 // app.METHOD('URL LOCATION', function(req, res))
 
