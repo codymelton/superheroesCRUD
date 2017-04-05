@@ -36,7 +36,7 @@ app.get('/villians', function(req, res){
 // app.METHOD('URL LOCATION', function(req, res))
 
 // Returns all super heroes from the DB.
-app.get('/superheroes', function(req,res){
+app.get('/api/superheroes', function(req,res){ //added /api for backend
   Superhero.find(function(err, data){
     if (err) {
       console.log(err);
@@ -92,7 +92,8 @@ app.post('/villains', function(req,res){
     });
 });
 
-app.get('/superheroes/:superhero_id', function(req,res){
+//added /api for backend
+app.get('/api/superheroes/:superhero_id', function(req,res){
   Superhero.findById(req.params.superhero_id, function(err,data){
     if (err) {
       console.log(err);

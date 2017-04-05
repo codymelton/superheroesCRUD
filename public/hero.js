@@ -9,7 +9,7 @@ var sampleVue = new Vue({
   },
 });
 
-fetch("/superheroes")  //Gets the information from json
+fetch("/api/superheroes")  //Gets the information from json
   .then(function(blob){  //consuming a promise chain - gets data from database
     return blob.json();  //makes get request to database
   })
