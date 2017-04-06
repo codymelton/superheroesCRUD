@@ -19,18 +19,25 @@
   </head>
   <body>
 
-  <h3>Hello from the good guys!</h3>
-
-  <div id="sample">
-
-    <h3>{{title}}</h3>
-    <ul v-for="n in numbers">
-      <li> {{n}} </li>
-    </ul>
-
-  <h3>{{ heroes[0].name }}</h3>
-
+  <div class="jumbotron">
+    <div class="container">
+      <h3>Hello from the good guys!</h3>
+    </div>
   </div>
+
+<div class = "container">
+  <div id="component">
+    <div v-for="hero in heroes" class = "hero-panel">
+      <h3>{{hero.name}}</h3>
+      <img class="hero-image" :src="hero.img"/>
+      <ul>
+        <li>{{hero.universe}}</li>
+        <li>{{hero.rank}}</li>
+        <li>{{hero.superPower}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
