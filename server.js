@@ -64,7 +64,8 @@ app.post('/api/superheroes', function(req,res){
       superPower: req.body.superPower,
       universe: req.body.universe,
       evil: req.body.evil,
-      rank: req.body.rank
+      rank: req.body.rank,
+      img: req.body.img
   });
   newSuper.save(function(err,data){
     if (err) {
@@ -103,6 +104,17 @@ app.get('/api/superheroes/:superhero_id', function(req,res){
   });
 });
 
+//Gets from villain DB
+app.get('/api/villains/:villain_id', function(req,res){
+  Villain.findById(req.params.villain_id, function(err,data) {
+  if (err) {
+    console.log(err);
+  } else {
+    res.json(data);
+  }
+  })
+})
+
 // app.delete
 
 app.delete('/api/superheroes/:superhero_id', function(req,res){
@@ -115,7 +127,39 @@ app.delete('/api/superheroes/:superhero_id', function(req,res){
   });
 });
 
+//app.delete for villain
+// app.delete('/api/villians/:villain_id' function(req,res){
+//   Villain.remove({_id: req.params.superhero_id}, function(err){
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       res.send("Villain is wiped!")
+//     }
+//   });
+// });
+
 // app.put
+
+app.put('/api/superheroes/:superhero_id', function(req,res){
+  Superhero.findById(req.params.superhero_id, function(err, hero){
+
+    if (!hero) return res.status(404); //only in node.  404 is not found
+
+    hero.name = req.body.name ? req.body.name : hero.name;
+    hero.superPower = req.body.superPower ? req.body.superPower : hero.superPower;
+    hero.universe = req.body.universe ? req.body.universe : hero.universe;
+    hero.evil = req.body.evil ? req.body.evil : hero.evil;
+    hero.rank = req.body.rank ? req.body.rank : hero.rank; //ctrl+d after highlight to edit same text in a line.
+    hero.img = req.body.img ? req.body.img : hero.img
+    hero.save(function(e){
+      if (e) {
+        res.status(500).send(e) //This is an internal server error
+      } else {
+        res.json(hero);
+      }
+    })
+  })
+});
 
 //Server start happens last
 var server = app.listen(3000, function(){

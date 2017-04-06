@@ -1,4 +1,5 @@
-console.log("Hello from hero.js inside of public directory");
+// test to ensure that the js files were linked.
+// console.log("Hello from hero.js inside of public directory");
 
 var sampleVue = new Vue({
   el: "#sample",

@@ -13,3 +13,15 @@ look like.  It will be a constructor function we will use to actually
 make new superheroes.
 
 need to make anything that accesses the backend database have /api like in the server.js example.
+
+Ternary Statement format
+var number = 100;
+
+if (number>50){
+  console.log("I am greater than 50")
+} else{
+  console.log("I am not greater than 50")
+};
+
+//THIS WAY
+number > 50 ? console.log("I am greater than 50") : console.log("I am not greater than 50");
