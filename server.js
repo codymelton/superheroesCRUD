@@ -5,6 +5,7 @@ var app     = express();
 var bodyParser = require('body-parser')
 var mongoose = require('mongoose');
 var path = require('path');
+var superheroRoutes = require('./routes/superheroes')
 
 //required to connect to our local database.
 //it will look for/ or create a db called superheroes.
@@ -16,7 +17,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //Tells express where client side (static) code
 //is going to live in the public folder.
 app.use(express.static('public'));
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -35,36 +35,10 @@ app.get('/villians', function(req, res){
 
 // app.METHOD('URL LOCATION', function(req, res))
 
-// Returns all super heroes from the DB.
-app.get('/api/superheroes', function(req,res){ //added /api for backend
-  Superhero.find(function(err, data){
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(data);
-    }
-  });
-})
 
 // Returns all villains from the DB
 app.get('/api/villains', function(req,res){
   Villain.find(function(err, data){
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(data);
-    }
-  });
-});
-
-// Posts to the superhero DB
-app.post('/api/superheroes', function(req,res){
-  var newSuper = new Superhero();
-
-  newSuper.loadPower(req.body.superPower);
-  newSuper.loadData(req.body);
-
-  newSuper.save(function(err,data){
     if (err) {
       console.log(err);
     } else {
@@ -89,16 +63,7 @@ app.post('/api/villains', function(req,res){
     });
 });
 
-//added /api for backend
-app.get('/api/superheroes/:superhero_id', function(req,res){
-  Superhero.findById(req.params.superhero_id, function(err,data){
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(data);
-    }
-  });
-});
+
 
 //Gets from villain DB
 app.get('/api/villains/:villain_id', function(req,res){
@@ -111,18 +76,6 @@ app.get('/api/villains/:villain_id', function(req,res){
   })
 })
 
-// app.delete
-
-app.delete('/api/superheroes/:superhero_id', function(req,res){
-  Superhero.remove({_id: req.params.superhero_id}, function(err){
-    if (err) {
-      console.log(err);
-    } else {
-      res.send("Super hero was 💩🛢'd")
-    }
-  });
-});
-
 // app.delete for villain
 app.delete('/api/villains/:villain_id', function(req,res){
   Villain.remove({_id: req.params.villain_id}, function(err){
@@ -134,23 +87,6 @@ app.delete('/api/villains/:villain_id', function(req,res){
   });
 });
 
-// app.put
-
-app.put('/api/superheroes/:superhero_id', function(req,res){
-  Superhero.findById(req.params.superhero_id, function(err, hero){
-
-    if (!hero) return res.status(404); //only in node.  404 is not found
-    hero.loadPower(req.body.superPower);
-    hero.loadData(req.body);
-    hero.save(function(e){
-      if (e) {
-        res.status(500).send(e) //This is an internal server error
-      } else {
-        res.json(hero);
-      }
-    })
-  })
-});
 
 app.put('/api/villains/:villain_id', function(req,res) {
   Villain.findById(req.params.villain_id, function(err, villain){
@@ -167,6 +103,9 @@ app.put('/api/villains/:villain_id', function(req,res) {
     })
   })
 })
+
+//use the exported routes and use the new file to get the routes.
+app.use('/api/superheroes', superheroRoutes)
 
 //Server start happens last
 var server = app.listen(3000, function(){
