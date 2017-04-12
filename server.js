@@ -59,14 +59,11 @@ app.get('/api/villains', function(req,res){
 
 // Posts to the superhero DB
 app.post('/api/superheroes', function(req,res){
-  var newSuper = new Superhero({
-      name: req.body.name,
-      superPower: req.body.superPower,
-      universe: req.body.universe,
-      evil: req.body.evil,
-      rank: req.body.rank,
-      img: req.body.img
-  });
+  var newSuper = new Superhero();
+
+  newSuper.loadPower(req.body.superPower);
+  newSuper.loadData(req.body);
+
   newSuper.save(function(err,data){
     if (err) {
       console.log(err);
@@ -78,12 +75,11 @@ app.post('/api/superheroes', function(req,res){
 
 // Posts to the villain DB
 app.post('/api/villains', function(req,res){
-    var newVillain = new Villain({
-      name: req.body.name,
-      evilPower: req.body.evilPower,
-      evil: req.body.evil,
-      nemesis: req.body.nemesis
-    });
+    var newVillain = new Villain();
+
+    newVillain.loadPower(req.body.evilPower);
+    newVillain.loadData(req.body);
+
     newVillain.save(function(err,data){
       if (err) {
         console.log(err);
@@ -127,16 +123,16 @@ app.delete('/api/superheroes/:superhero_id', function(req,res){
   });
 });
 
-//app.delete for villain
-// app.delete('/api/villians/:villain_id' function(req,res){
-//   Villain.remove({_id: req.params.superhero_id}, function(err){
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       res.send("Villain is wiped!")
-//     }
-//   });
-// });
+// app.delete for villain
+app.delete('/api/villains/:villain_id', function(req,res){
+  Villain.remove({_id: req.params.villain_id}, function(err){
+    if (err) {
+      console.log(err);
+    } else {
+      res.send("Villain is wiped!")
+    }
+  });
+});
 
 // app.put
 
@@ -144,13 +140,8 @@ app.put('/api/superheroes/:superhero_id', function(req,res){
   Superhero.findById(req.params.superhero_id, function(err, hero){
 
     if (!hero) return res.status(404); //only in node.  404 is not found
-
-    hero.name = req.body.name ? req.body.name : hero.name;
-    hero.superPower = req.body.superPower ? req.body.superPower : hero.superPower;
-    hero.universe = req.body.universe ? req.body.universe : hero.universe;
-    hero.evil = req.body.evil ? req.body.evil : hero.evil;
-    hero.rank = req.body.rank ? req.body.rank : hero.rank; //ctrl+d after highlight to edit same text in a line.
-    hero.img = req.body.img ? req.body.img : hero.img
+    hero.loadPower(req.body.superPower);
+    hero.loadData(req.body);
     hero.save(function(e){
       if (e) {
         res.status(500).send(e) //This is an internal server error
@@ -160,6 +151,22 @@ app.put('/api/superheroes/:superhero_id', function(req,res){
     })
   })
 });
+
+app.put('/api/villains/:villain_id', function(req,res) {
+  Villain.findById(req.params.villain_id, function(err, villain){
+
+    if (!villain) return res.status(404);
+    villain.loadPower(req.body.evilPower);
+    villain.loadData(req.body);
+    villain.save(function(e){
+      if (e) {
+        res.status(500).send(e)
+      } else {
+        res.json(villain);
+      }
+    })
+  })
+})
 
 //Server start happens last
 var server = app.listen(3000, function(){
