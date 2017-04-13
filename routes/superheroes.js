@@ -6,9 +6,9 @@ Router.route('/')
   .get(function(req,res){
     Superhero.find(function(err, data){
       if (err) {
-        console.log(err);
+        res.send(err);
       } else {
-        res.json(data);
+        res.json({ message: "Found your heroes!",data });
       }
     });
   })
@@ -18,9 +18,9 @@ Router.route('/')
     newSuper.loadData(req.body);
     newSuper.save(function(err,data){
       if (err) {
-        console.log(err);
+        res.send(err);
       } else {
-        res.json(data);
+        res.json({ data, message: "Hero created" });
       }
     });
   });
@@ -29,9 +29,9 @@ Router.route('/')
     .delete(function(req,res){
       Superhero.remove({_id: req.params.superhero_id}, function(err){
         if (err) {
-          console.log(err);
+          res.send(err);
         } else {
-          res.send("Super hero was 💩🛢'd")
+          res.json({message: "Super hero was 💩🛢'd"})
         }
       });
     })
@@ -43,9 +43,9 @@ Router.route('/')
         hero.loadData(req.body);
         hero.save(function(e){
           if (e) {
-            res.status(500).send(e) //This is an internal server error
+            res.send(e) //This is an internal server error
           } else {
-            res.json(hero);
+            res.json({ hero, message: "Hero updated" });
           }
         })
       })
@@ -53,7 +53,7 @@ Router.route('/')
     .get(function(req,res){
       Superhero.findById(req.params.superhero_id, function(err,data){
         if (err) {
-          console.log(err);
+          res.send(err);
         } else {
           res.json(data);
         }

@@ -4,7 +4,7 @@
   "description": "A demo crud api using mongodb and express as API router",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --no-deprecation --sort --colors --inline-diffs --bail",
     "start": "node server.js"
   },
   "repository": {
@@ -22,5 +22,9 @@
     "ejs": "^2.5.6",
     "express": "^4.15.2",
     "mongoose": "^4.9.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0"
   }
 }

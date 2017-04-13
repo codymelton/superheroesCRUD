@@ -111,3 +111,5 @@ app.use('/api/superheroes', superheroRoutes)
 var server = app.listen(3000, function(){
   console.log("Server is the 💩  on PORT 3000");
 });
+
+module.exports = app;
