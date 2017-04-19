@@ -109,7 +109,7 @@ app.use('/api/superheroes', superheroRoutes)
 
 //Server start happens last
 var server = app.listen(3000, function(){
-  console.log("Server is the 💩  on PORT 3000");
+  console.log("This server is ready on PORT 3000");
 });
 
 module.exports = app;

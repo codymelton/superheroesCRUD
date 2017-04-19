@@ -1,6 +1,7 @@
-var express = require('express');
-var Router = express.Router();
-var Superhero = require('../models/superhero')
+var express   = require('express');
+var Router    = express.Router();
+var Superhero = require('../models/superhero');
+var async     = require('async');
 
 Router.route('/')
   .get(function(req,res){
@@ -12,17 +13,30 @@ Router.route('/')
       }
     });
   })
+
+//POSTS AN ARRAY OF DATA ALL AT ONCE
+Router.route('/multiplesupers')
   .post(function(req,res){
-    var newSuper = new Superhero();
-    newSuper.loadPower(req.body.superPower);
-    newSuper.loadData(req.body);
-    newSuper.save(function(err,data){
-      if (err) {
-        res.send(err);
-      } else {
-        res.json({ data, message: "Hero created" });
-      }
-    });
+    //Works a bunch of things through all at once asynchronously
+    var newHeros = [];
+    async.each(req.body.data, function(hero, cb){ //works like for each method
+      var newSuper = new Superhero();
+      newSuper.loadPower(hero.superPower);
+      newSuper.loadData(hero);
+
+      newSuper.save()
+        .then(function(newSuper){
+          console.log(hero, 'EACH HERO SUCCESS');
+          newHeros.push(newSuper);
+          cb();
+        }, function(err){
+          if (err) throw cb(err);
+        });
+      }, function(err){
+        if (err) throw err;
+        res.json(newHeros);
+      });
+
   });
 
   Router.route('/:superhero_id')

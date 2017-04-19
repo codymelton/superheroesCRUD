@@ -8,7 +8,10 @@ var componentVue = new Vue({
     hero: {},
     newName: "",//*****MATCH TO SUPERHERO.JS SCHEMA and line 28
     newSuperpower: "",
+    newUniverse: "",
     newEvil: "",
+    newRank: "",
+    newImg: ""
   },
   methods: {
     deleteHero: function(id){
