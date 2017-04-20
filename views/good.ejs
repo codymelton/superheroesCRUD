@@ -26,8 +26,8 @@
   </div>
 
 <div class = "container">
-  <div id="heropannel">
-    <div v-for="hero in heroes" class = "hero-panel">
+  <div id="heropannel" class = "panel-group">
+    <div v-for="hero in heroes" class = "panel panel-default hero-panel">
       <h3>{{hero.name}}</h3>
       <img class="hero-image" :src="hero.img"/>
       <ul>
@@ -40,7 +40,16 @@
       <form class="form" v-on:submit="submitHero">
         <div class="form-group">
           <label> Hero Name: </label>
-          <input type="text" placeholder="enter hero name" v-model="newName">
+          <input type="text" class="form-control" placeholder="enter hero name" v-model="newName">
+          <label> Hero Powers: </label>
+          <input type="text" class="form-control" placeholder="enter hero powers" v-model="newSuperpower">
+          <label> Hero's universe: </label>
+          <input type="text" class="form-control" placeholder="enter hero's universe" v-model="newUniverse">
+          <!--<label> Is this hero evil? </label>-->
+          <label> Hero's Rank: </label>
+          <input type="text" class="form-control" placeholder="enter hero rank" v-model="newRank">
+          <label> Image: </label>
+          <input type="text" class="form-control" placeholder="image link" v-model="newImg">
         </div>
         <button class="btn btn-success" type="submit" name="button">submit</button>
       </form>

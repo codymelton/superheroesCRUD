@@ -5,6 +5,14 @@
 #component {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: row;
+  align-items: baseline;
+}
+
+#heropannel {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   align-items: baseline;
 }
 
@@ -13,8 +21,7 @@ ul{
 }
 
 .hero-panel{
-  border: 3px solid red;
-  width: calc(50% - 20px);
+  width: calc(49.99% - 20px);
   margin: 10px;
   text-align: center;
 }

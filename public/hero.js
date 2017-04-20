@@ -28,8 +28,12 @@ var componentVue = new Vue({
       e.preventDefault()
       alert("I was found")
       var data = {
-        name: this.newName, //GET THIS ALL SET UP
-        superPowers: this.newSuperpower,
+        name:         this.newName, //GET THIS ALL SET UP
+        superPowers:  this.newSuperpower,
+        universe:     this.newUniverse,
+        evil:         this.newEvil,
+        rank:         this.newRank,
+        img:          this.newImg
       }
       $.ajax({
         url: "/api/superheroes",
